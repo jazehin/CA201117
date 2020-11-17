@@ -89,30 +89,30 @@ namespace CA201117
             do
             {
                 Console.Clear();
-                Console.Write("Adjon meg az évfolyamát: ");
+                Console.Write("Adja meg az évfolyamát: ");
                 evf = Console.ReadLine();
-                Console.Write("Adjon meg az osztályjelét: ");
+                Console.Write("Adja meg az osztályjelét: ");
                 jel = Console.ReadLine();
-                Console.Write("Adjon meg a vezetéknevét: ");
+                Console.Write("Adja meg a vezetéknevét: ");
                 vnev = Console.ReadLine();
-                Console.Write("Adjon meg a kereszt, ill. utóneve(i)t: ");
+                Console.Write("Adja meg a kereszt, ill. utóneve(i)t: ");
                 knev = Console.ReadLine();
             } while (!TanuloLetezik(evf, jel, vnev, knev));
-            Console.WriteLine($"{vnev} {knev} azonosítója {Azonosito(evf, jel, vnev, knev, new Tanulo())}");
+            Console.WriteLine($"{vnev} {knev} azonosítója {Azonosito(evf, jel, vnev, knev)}");
             Console.ReadKey();
         }
 
         private static bool TanuloLetezik(string evf, string jel, string vnev, string knev)
         {
-            bool letezik = false;
-            for (int i = 0; i < tanulok.Count; i++)
+            int i = 0;
+            while (i < tanulok.Count && !(tanulok[i].vnev == vnev && tanulok[i].knev == knev && tanulok[i].evf == evf && tanulok[i].jel == jel))
             {
-                if (tanulok[i].vnev == vnev && tanulok[i].knev == knev && tanulok[i].evf == evf && tanulok[i].jel == jel) letezik = true;
+                i++;
             }
-            return letezik;
+            return i < tanulok.Count;
         }
 
-        private static string Azonosito(string evf, string jel, string vnev, string knev, Tanulo tanulo)
+        private static string Azonosito(string evf, string jel, string vnev, string knev, Tanulo tanulo = new Tanulo())
         {
             if (!(evf == "")) return $"{evf[3]}{jel}{vnev.ToLower().Substring(0, 3)}{knev.ToLower().Substring(0, 3)}";
             else return $"{tanulo.evf[3]}{tanulo.jel}{tanulo.vnev.ToLower().Substring(0, 3)}{tanulo.knev.ToLower().Substring(0, 3)}";
@@ -215,12 +215,12 @@ namespace CA201117
 
         private static bool OsztalyLetezik(string evf, string jel)
         {
-            bool letezik = false;
-            for (int i = 0; i < tanulok.Count; i++)
+            int i = 0;
+            while (i < tanulok.Count && !(tanulok[i].evf == evf && tanulok[i].jel == jel))
             {
-                if (tanulok[i].evf == evf && tanulok[i].jel == jel) letezik = true;
+                i++;
             }
-            return letezik;
+            return i < tanulok.Count;
         }
 
         private static void B()
